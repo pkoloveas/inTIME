@@ -1,6 +1,4 @@
-# Crawling Service
-
-The Crawling Service is the Cyber-Trust component responsible for enriching the eVBD with new Cyber-Threat Intelligence.
+# inTIME: A Machine Learning-Based Framework for Gathering and Leveraging Web Data to Cyber-Threat Intelligence
 
 ## Key Functionality
 
