@@ -1,0 +1,196 @@
+{
+    "requiredOneOf": [
+        "id"
+    ],
+    "attributes": {
+        "id": {
+            "description": "The crawled document ID.",
+            "ui-priority": 0,
+            "misp-attribute": "text",
+            "disable_correlation": true
+        },
+        "title": {
+            "description": "The title of the crawled document.",
+            "ui-priority": 1,
+            "misp-attribute": "text",
+            "disable_correlation": true
+        },
+        "hashed_title": {
+            "description": "The MD5 hash of the title of the crawled document.",
+            "ui-priority": 2,
+            "misp-attribute": "text",
+            "disable_correlation": true
+        },
+        "raw_text": {
+            "description": "The raw text of the crawled document.",
+            "ui-priority": 3,
+            "misp-attribute": "text",
+            "disable_correlation": true
+        },
+        "hashed_text": {
+            "description": "The MD5 hash of the raw text of the crawled document.",
+            "ui-priority": 4,
+            "misp-attribute": "text",
+            "disable_correlation": true
+        },
+        "source_url": {
+            "description": "The source URL of the crawled document.",
+            "ui-priority": 5,
+            "misp-attribute": "link",
+            "disable_correlation": true
+        },                
+        "hashed_url": {
+            "description": "The MD5 hash of the source URL of the crawled document.",
+            "ui-priority": 6,
+            "misp-attribute": "text",
+            "disable_correlation": true
+        },
+        "discovered_by": {
+            "description": "The type of the crawler that discovered the document.",
+            "ui-priority": 7,
+            "misp-attribute": "text",
+            "disable_correlation": true
+        }, 
+        "discovery_timestamp": {
+            "description": "The timestamp of the document discovery.",
+            "ui-priority": 8,
+            "misp-attribute": "datetime",
+            "disable_correlation": true
+        },
+        "crawler_type": {
+            "description": "The crawler that discovered the document.",
+            "ui-priority": 9,
+            "misp-attribute": "text",
+            "disable_correlation": true
+        },
+        "relevance_score": {
+            "description": "The relevance score assigned to the document by the Content Ranking component",
+            "ui-priority": 10,
+            "misp-attribute": "float",
+            "disable_correlation": true
+        },
+        "highlight": {
+            "description": "A HIGHLIGHT IDENTIFIED by the CTI Extraction component.",
+            "ui-priority": 11,
+            "misp-attribute": "text",
+            "disable_correlation": true,
+            "multiple": true
+        },
+        "vulnerable_configuration": {
+            "description": "A CPE ENTITY dicovered by the Named Entity Recognition functionality of the CTI Extraction component.",
+            "ui-priority": 12,
+            "misp-attribute": "text",
+            "disable_correlation": true,
+            "multiple": true
+        },
+        "cve_entity": {
+            "description": "A CVE ENTITY dicovered by the Named Entity Recognition functionality of the CTI Extraction component.",
+            "ui-priority": 13,
+            "misp-attribute": "text",
+            "disable_correlation": true,
+            "multiple": true
+        },
+        "cwe_entity": {
+            "description": "A CWE ENTITY dicovered by the Named Entity Recognition functionality of the CTI Extraction component.",
+            "ui-priority": 14,
+            "misp-attribute": "text",
+            "disable_correlation": true,
+            "multiple": true
+        },
+        "org_entity": {
+            "description": "An ORGANISATION/COMPANY ENTITY dicovered by the Named Entity Recognition functionality of the CTI Extraction component.",
+            "ui-priority": 15,
+            "misp-attribute": "text",
+            "disable_correlation": true,
+            "multiple": true
+        },
+        "product_entity": {
+            "description": "A PRODUCT ENTITY dicovered by the Named Entity Recognition functionality of the CTI Extraction component.",
+            "ui-priority": 16,
+            "misp-attribute": "text",
+            "disable_correlation": true,
+            "multiple": true
+        },
+        "cvss2_vector_entity": {
+            "description": "A CVSS2 VECTOR dicovered by the Named Entity Recognition functionality of the CTI Extraction component.",
+            "ui-priority": 17,
+            "misp-attribute": "text",
+            "disable_correlation": true,
+            "multiple": true
+        },
+        "cvss3_vector_entity": {
+            "description": "A CVSS3 VECTOR (v3.0-3.1) dicovered by the Named Entity Recognition functionality of the CTI Extraction component.",
+            "ui-priority": 18,
+            "misp-attribute": "text",
+            "disable_correlation": true,
+            "multiple": true
+        },
+        "version_entity": {
+            "description": "A VERSION ENTITY dicovered by the Named Entity Recognition functionality of the CTI Extraction component.",
+            "ui-priority": 19,
+            "misp-attribute": "text",
+            "disable_correlation": true,
+            "multiple": true
+        },
+        "ip_entity": {
+            "description": "A MONEY ENTITY dicovered by the Named Entity Recognition functionality of the CTI Extraction component.",
+            "ui-priority": 20,
+            "misp-attribute": "text",
+            "disable_correlation": true,
+            "multiple": true
+        },
+        "file_entity": {
+            "description": "A FILE ENTITY dicovered by the Named Entity Recognition functionality of the CTI Extraction component.",
+            "ui-priority": 21,
+            "misp-attribute": "text",
+            "disable_correlation": true,
+            "multiple": true
+        },
+        "command_function_config_entity": {
+            "description": "A COMMAND, FUNCTION or CONFIG ENTITY dicovered by the Named Entity Recognition functionality of the CTI Extraction component.",
+            "ui-priority": 22,
+            "misp-attribute": "text",
+            "disable_correlation": true,
+            "multiple": true
+        },
+        "money_entity": {
+            "description": "A MONEY ENTITY dicovered by the Named Entity Recognition functionality of the CTI Extraction component.",
+            "ui-priority": 23,
+            "misp-attribute": "text",
+            "disable_correlation": true,
+            "multiple": true
+        },
+        "date_entity": {
+            "description": "A DATE ENTITY dicovered by the Named Entity Recognition functionality of the CTI Extraction component.",
+            "ui-priority": 24,
+            "misp-attribute": "text",
+            "disable_correlation": true,
+            "multiple": true
+        },
+        "time_entity": {
+            "description": "A TIME ENTITY dicovered by the Named Entity Recognition functionality of the CTI Extraction component.",
+            "ui-priority": 25,
+            "misp-attribute": "text",
+            "disable_correlation": true,
+            "multiple": true
+        },
+        "possible_cpe": {
+            "description": "A possible CPE for a PRODUCT ENTITY.",
+            "ui-priority": 26,
+            "misp-attribute": "text",
+            "disable_correlation": true,
+            "multiple": true
+        },
+        "credit": {
+            "description": "Who reported/found the document such as an organisation, person or nickname.",
+            "ui-priority": 27,
+            "misp-attribute": "text",
+            "disable_correlation": true
+        }
+    },
+    "version": 1,
+    "description": "Object that describes CTI gathered from the Crawler component.",
+    "meta-category": "vulnerability",
+    "uuid": "81650945-f186-437b-8945-9f31715d32dc",
+    "name": "crawled_obj"
+}

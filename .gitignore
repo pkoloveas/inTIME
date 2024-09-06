@@ -1,0 +1,22 @@
+__pycache__
+.vscode/
+my-venv
+# mongo-docker/data/*
+# ache-crawlers/*
+named-entity-recognition/models/ner_model
+content-ranking/data/corpus/*/*.txt
+content-ranking/data/stack-exchange-xml-files/*.xml
+watchers/watcher_data/*
+
+!watchers/watcher_data/.keep
+
+*.npy
+*.model
+*.log
+.env
+.env_ote
+.directory
+docker-compose.yml
+
+.DS_Store
+

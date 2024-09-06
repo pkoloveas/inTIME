@@ -1,0 +1,976 @@
+swagger: "2.0"
+info:
+  description: Swagger file for Crawler API config
+  version: "1.0.0"
+  title: Swagger REST API
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: /api
+
+paths:
+  /crawlers:
+    get:
+      operationId: crawlers.read_all
+      tags:
+        - crawlers
+      summary: Retrieve all crawlers
+      description: Retrieve all crawlers
+      responses:
+        200:
+          description: OK - Successfully retrieved all crawlers
+          schema:
+            type: array
+
+  /crawlers/{crawler_id}:
+    get:
+      operationId: crawlers.read_one
+      tags:
+        - crawlers
+      summary: Retrieve specific crawler
+      description: Retrieve specific crawler
+      parameters:
+        - in: path
+          name: crawler_id
+          description: ID of crawler to retrieve
+          required: True
+          type: string
+      responses:
+        200:
+          description: OK - Successfully retrieved crawler
+          schema:
+            type: object
+        404:
+          description: NOT FOUND - Crawler does not exist
+
+    post:
+      operationId: crawlers.create_crawler
+      tags:
+        - crawlers
+      summary: Create a new crawler
+      description: Create a new crawler
+      parameters:
+        - in: path
+          name: crawler_id
+          description: ID of crawler to create
+          required: True
+          type: string
+        - in: body
+          name: crawler_config
+          description: The configuration of the crawler to be created
+          schema:
+            type: object
+            required:
+              - crawler_type
+              - port
+            properties:
+              crawler_type:
+                description: The type of the crawler
+                type: string
+                enum: [focused, indepth_clear, indepth_dark]
+              port:
+                description: The port of crawler
+                type: integer
+      responses:
+        201:
+          description: CREATED - Successfully created crawler
+        409:
+          description: CONFLICT - Crawler already exists
+
+  /crawlers/{crawler_id}/seedFinder:
+    post:
+      operationId: crawlers.add_seedFinder_query
+      tags:
+        - crawlers
+      summary: Add SeedFinder query
+      description: Add SeedFinder query
+      parameters:
+        - in: path
+          name: crawler_id
+          description: ID of crawler
+          required: True
+          type: string
+        - in: body
+          name: seedFinder_obj
+          description: The query for the SeedFinder tool
+          schema:
+            type: object
+            required:
+              - seedFinder_query
+            properties:
+              seedFinder_query:
+                type: string
+      responses:
+        201:
+          description: CREATED - Successfully added Seedinder query
+        404:
+          description: NOT FOUND - Crawler does not exist
+        405:
+          description: METHOD NOT ALLOWED - Functionality not allowed for specified crawl type
+
+    get:
+      operationId: crawlers.read_seedFinder_query
+      tags:
+        - crawlers
+      summary: Read SeedFinder query
+      description: Read SeedFinder query
+      parameters:
+        - in: path
+          name: crawler_id
+          description: ID of crawler
+          required: True
+          type: string
+      responses:
+        200:
+          description: OK - Successfully retrieved Seedinder query
+          schema:
+            type: object
+        404:
+          description: NOT FOUND - Crawler does not exist
+        405:
+          description: METHOD NOT ALLOWED - Functionality not allowed for specified crawl type
+
+  /crawlers/{crawler_id}/seeds:
+    get:
+      operationId: crawlers.read_seed_urls
+      tags:
+        - crawlers
+      summary: Retrieve seed URLs
+      description: Retrieve seed URLs
+      parameters:
+        - in: path
+          name: crawler_id
+          description: ID of crawler
+          required: True
+          type: string
+      responses:
+        200:
+          description: OK - Successfully retrieved seed URLs
+          schema:
+            type: object
+            properties:
+              seed_urls:
+                type: array
+        404:
+          description: NOT FOUND - Crawler does not exist
+
+  /crawlers/{crawler_id}/seeds/add_single:
+    post:
+      operationId: crawlers.add_seed_single
+      tags:
+        - crawlers
+      summary: Add individual seed URL
+      description: Add individual seed URL
+      parameters:
+        - in: path
+          name: crawler_id
+          description: ID of crawler
+          required: True
+          type: string
+        - in: body
+          name: seed_obj
+          description: The seed URL to add
+          schema:
+            type: object
+            required:
+              - seed_url
+            properties:
+              seed_url:
+                type: string
+      responses:
+        201:
+          description: CREATED - Successfully added seed URL
+        404:
+          description: NOT FOUND - Crawler does not exist
+
+  /crawlers/{crawler_id}/seeds/add_file:
+    post:
+      operationId: crawlers.add_seed_file
+      tags:
+        - crawlers
+      summary: Add file of seed URLs
+      description: Add file of seed URLs
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: path
+          name: crawler_id
+          description: ID of crawler
+          required: True
+          type: string
+        - in: formData
+          name: seed_file
+          description: The seed file to upload
+          type: file
+          required: True
+      responses:
+        201:
+          description: CREATED - Successfully uploaded seed file
+        404:
+          description: NOT FOUND - Crawler does not exist
+
+  /crawlers/{crawler_id}/seeds/remove_single:
+    delete:
+      operationId: crawlers.delete_seed_url
+      tags:
+        - crawlers
+      summary: Delete specific seed URL
+      description: Delete specific seed URL
+      parameters:
+        - in: path
+          name: crawler_id
+          description: ID of crawler
+          required: True
+          type: string
+        - in: query
+          name: offset
+          description: Position of the the seed to be deleted
+          type: integer
+      responses:
+        200:
+          description: OK - Successfully deleted seed URL
+        400:
+          description: BAD REQUEST - Specified position is invalid
+        404:
+          description: NOT FOUND - Crawler does not exist
+
+  /crawlers/{crawler_id}/training_urls:
+    get:
+      operationId: crawlers.read_training_urls
+      tags:
+        - crawlers
+      summary: Retrieve training URLs
+      description: Retrieve training URLs
+      parameters:
+        - in: path
+          name: crawler_id
+          description: ID of crawler
+          required: True
+          type: string
+        - in: query
+          name: url_type
+          required: True
+          type: string
+          description: The type of training URL
+          enum: [positive, negative]
+      responses:
+        200:
+          description: OK - Successfully retrieved training URLs
+          schema:
+            type: object
+            properties:
+              negative_urls:
+                type: array
+              positive_urls:
+                type: array
+        404:
+          description: NOT FOUND - Crawler does not exist
+        405:
+          description: METHOD NOT ALLOWED - Functionality not allowed for specified crawl type
+
+  /crawlers/{crawler_id}/training_urls/add_single:
+    post:
+      operationId: crawlers.add_training_url_single
+      tags:
+        - crawlers
+      summary: Add individual training URL
+      description: Add individual training URL
+      parameters:
+        - in: path
+          name: crawler_id
+          description: ID of crawler
+          required: True
+          type: string
+        - in: query
+          name: url_type
+          required: True
+          type: string
+          description: The type of training URL
+          enum: [positive, negative]
+        - in: body
+          name: training_obj
+          description: The training URL to add
+          schema:
+            type: object
+            required:
+              - training_url
+            properties:
+              training_url:
+                type: string
+      responses:
+        201:
+          description: CREATED - Successfully added training URL
+        404:
+          description: NOT FOUND - Crawler does not exist
+        405:
+          description: METHOD NOT ALLOWED - Functionality not allowed for specified crawl type
+
+  /crawlers/{crawler_id}/training_urls/add_file:
+    post:
+      operationId: crawlers.add_training_file
+      tags:
+        - crawlers
+      summary: Add file of training URLs
+      description: Add file of training URLs
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: path
+          name: crawler_id
+          description: ID of crawler
+          required: True
+          type: string
+        - in: formData
+          name: training_file
+          description: The training file to upload
+          type: file
+          required: True
+        - in: query
+          name: url_type
+          required: True
+          type: string
+          description: The type of training URL
+          enum: [positive, negative]
+      responses:
+        201:
+          description: Successfully uploaded training file
+        404:
+          description: NOT FOUND - Crawler does not exist
+        405:
+          description: METHOD NOT ALLOWED - Functionality not allowed for specified crawl type
+
+  /crawlers/{crawler_id}/training_urls/remove_single:
+    delete:
+      operationId: crawlers.delete_training_url
+      tags:
+        - crawlers
+      summary: Delete specific training URL
+      description: Delete specific training URL
+      parameters:
+        - in: path
+          name: crawler_id
+          description: ID of crawler
+          required: True
+          type: string
+        - in: query
+          name: offset
+          description: Position of the the training URL to be removed
+          type: integer
+        - in: query
+          name: url_type
+          required: True
+          type: string
+          description: The type of training URL
+          enum: [positive, negative]
+      responses:
+        200:
+          description: OK - Successfully deleted seed URL
+        400:
+          description: BAD REQUEST - Specified position is invalid
+        404:
+          description: NOT FOUND - Crawler does not exist
+        405:
+          description: METHOD NOT ALLOWED - Functionality not allowed for specified crawl type
+
+  /crawlers/{crawler_id}/link_filters_file:
+    post:
+      operationId: crawlers.add_link_filters_file
+      tags:
+        - crawlers
+      summary: Add file with link filters
+      description: Add file with link filters
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: path
+          name: crawler_id
+          description: ID of crawler
+          required: True
+          type: string
+        - in: formData
+          name: link_filters_file
+          description: The link filters file to upload
+          type: file
+          required: True
+      responses:
+        201:
+          description: CREATED - Successfully uploaded link filters file
+        404:
+          description: NOT FOUND - Crawler does not exist
+        405:
+          description: METHOD NOT ALLOWED - Functionality not allowed for specified crawl type
+
+  /crawlers/{crawler_id}/cookie:
+    post:
+      operationId: crawlers.add_cookies
+      tags:
+        - crawlers
+      summary: Add Session Cookies to access pages with authentication
+      description: Add Session Cookies to access pages with authentication
+      parameters:
+        - in: path
+          name: crawler_id
+          description: ID of crawler
+          required: True
+          type: string
+        - in: body
+          name: cookie_obj
+          schema:
+            type: object
+            required:
+              - domain
+              - cookies
+              - user_agent
+            properties:
+              domain:
+                description: The domain of the cookie
+                type: string
+              cookies:
+                description: The cookie to be added
+                type: string
+              user_agent:
+                description: The user agent string of the browser
+                type: string
+      responses:
+        201:
+          description: CREATED - Successfully added Session Cookie
+        404:
+          description: NOT FOUND - Crawler does not exist
+        405:
+          description: METHOD NOT ALLOWED - Functionality not allowed for specified crawl type
+
+  /crawlers/{crawler_id}/crawled_pages:
+    get:
+      operationId: crawlers.read_crawled_pages
+      tags:
+        - crawlers
+      summary: Retrieve crawled pages
+      description: Retrieve crawled pages
+      parameters:
+        - in: path
+          name: crawler_id
+          description: ID of crawler
+          required: True
+          type: string
+        - in: query
+          name: page_type
+          required: True
+          type: string
+          description: The type of crawled pages
+          enum: [relevant, nonrelevant]
+      responses:
+        200:
+          description: OK - Successfully retrieved crawled pages
+          schema:
+            type: object
+            properties:
+              relevant_pages:
+                type: array
+              nonrelevant_pages:
+                type: array
+        404:
+          description: NOT FOUND - Crawler does not exist
+
+  /crawlers/{crawler_id}/start_crawl:
+    get:
+      operationId: crawlers.start_crawl
+      tags:
+        - crawlers
+      summary: Start a crawl
+      description: Start a crawl
+      parameters:
+        - in: path
+          name: crawler_id
+          description: ID of crawler
+          required: True
+          type: string
+      responses:
+        200:
+          description: OK - Successfully started crawler
+        404:
+          description: NOT FOUND - Crawler does not exist
+
+  /crawlers/{crawler_id}/stop_crawl:
+    get:
+      operationId: crawlers.stop_crawl
+      tags:
+        - crawlers
+      summary: Stop a crawl
+      description: Stop a crawl
+      parameters:
+        - in: path
+          name: crawler_id
+          description: ID of crawler
+          required: True
+          type: string
+      responses:
+        200:
+          description: OK - Successfully stopped crawler
+        404:
+          description: NOT FOUND - Crawler does not exist
+
+  /ports:
+    get:
+      operationId: ports.check_availability
+      tags:
+        - ports
+      summary: Retrieve available and occupied ports
+      description: Retrieve available and occupied ports
+      parameters:
+        - in: query
+          name: available
+          required: True
+          type: boolean
+          description: The availability status of the ports
+          enum: [True, False]
+      responses:
+        200:
+          description: OK - Successfully retrieved ports
+          schema:
+            type: array
+            items:
+              type: integer
+
+  /content_ranking/config:
+    get:
+      operationId: content_ranking.read_config
+      tags:
+        - content_ranking
+      summary: Read configuration of Content Ranking
+      description: Read configuration of Content Ranking
+      responses:
+        200:
+          description: OK - Successfully retrieved Content Ranking config
+          schema:
+            type: object
+            properties:
+              classifier_type:
+                type: string
+              dimensions:
+                type: integer
+              window:
+                type: integer
+              min_count:
+                type: integer
+              top_n:
+                type: integer
+              number_of_docs:
+                type: integer
+              iteration:
+                type: integer
+        404:
+          description: NOT FOUND - Content Ranking config does not exist
+
+    post:
+      operationId: content_ranking.add_config
+      tags:
+        - content_ranking
+      summary: Add configuration of Content Ranking
+      description: Add configuration of Content Ranking
+      parameters:
+        - in: body
+          name: content_ranking_config
+          description: The configuration of the Content Ranking component
+          schema:
+            type: object
+            properties:
+              classifier_type:
+                type: string
+                enum: ["word2vec"]
+              dimensions:
+                type: integer
+              window:
+                type: integer
+              min_count:
+                type: integer
+              top_n:
+                type: integer
+              number_of_docs:
+                type: integer
+              iteration:
+                type: integer
+      responses:
+        201:
+          description: CREATED - Successfully added Content Ranking config
+        409:
+          description: CONFLICT - Content Ranking config already exists
+
+    put:
+      operationId: content_ranking.change_config
+      tags:
+        - content_ranking
+      summary: Update configuration of Content Ranking
+      description: Update configuration of Content Ranking
+      parameters:
+        - in: body
+          name: content_ranking_config
+          description: The changes of the configuration
+          schema:
+            type: object
+            properties:
+              classifier_type:
+                type: string
+                enum: ["word2vec"]
+              dimensions:
+                type: integer
+              window:
+                type: integer
+              min_count:
+                type: integer
+              top_n:
+                type: integer
+              number_of_docs:
+                type: integer
+              iteration:
+                type: integer
+      responses:
+        200:
+          description: OK - Successfully updated Content Ranking config
+        404:
+          description: NOT FOUND - Content Ranking config does not exist
+
+  /content_ranking/number_of_docs:
+    get:
+      operationId: content_ranking.read_number_of_docs
+      tags:
+        - content_ranking
+      summary: Retrieve the number of documents to be evaluated with Content Ranking
+      description: Retrieve the number of documents to be evaluated with Content Ranking
+      responses:
+        200:
+          description: OK - Successfully retrieved number of documents to be evaluated with Content Ranking
+          schema:
+            type: string
+        404:
+          description: NOT FOUND - Content Ranking config does not exist
+
+    put:
+      operationId: content_ranking.change_number_of_docs
+      tags:
+        - content_ranking
+      summary: Update the number of documents to be evaluated with Content Ranking
+      description: Update the number of documents to be evaluated with Content Ranking
+      parameters:
+        - in: query
+          name: number_of_docs
+          required: True
+          type: integer
+          description: The number of documents to be evaluated with Content Ranking
+      responses:
+        200:
+          description: OK - Successfully updated number of documents to be evaluated with Content Ranking
+        404:
+          description: NOT FOUND - Content Ranking config does not exist
+
+  /content_ranking/classifier:
+    get:
+      operationId: content_ranking.read_classifier
+      tags:
+        - content_ranking
+      summary: Retrieve the type of classifier for Content Ranking
+      description: Retrieve the type of classifier for Content Ranking
+      responses:
+        200:
+          description: OK - Successfully retrieved classifier type
+          schema:
+            type: string
+        404:
+          description: NOT FOUND - Content Ranking config does not exist
+
+    put:
+      operationId: content_ranking.change_classifier
+      tags:
+        - content_ranking
+      summary: Update the type of classifier for Content Ranking
+      description: Update the type of classifier for Content Ranking
+      parameters:
+        - in: query
+          name: classifier_type
+          required: True
+          type: string
+          description: The availalable classifiers for Content Ranking
+          enum: ["word2vec"]
+      responses:
+        200:
+          description: OK - Successfully updated classifier type
+        404:
+          description: NOT FOUND - Content Ranking config does not exist
+
+  /content_ranking/iteration_number:
+    get:
+      operationId: content_ranking.read_iteration_number
+      tags: 
+        - content_ranking
+      summary: Get iteration number of Content Ranking
+      description: Get iteration number of Content Ranking
+      responses:
+        200:
+          description: OK - Successfully retrieved iteration number of Content Ranking
+          schema:
+            type: string
+        404:
+          description: NOT FOUND - Content Ranking config does not exist
+
+  /content_ranking/iteration_number/update:
+    put:
+      operationId: content_ranking.update_iteration_number
+      tags: 
+        - content_ranking
+      summary: Update iteration number of Content Ranking
+      description: Update iteration number of Content Ranking
+      responses:
+        200:
+          description: OK - Successfully updated iteration number of Content Ranking
+        404:
+          description: NOT FOUND - Content Ranking config does not exist
+
+  /content_ranking/iteration_number/reset:
+    put:
+      operationId: content_ranking.reset_iteration_number
+      tags: 
+        - content_ranking
+      summary: Reset iteration number of Content Ranking
+      description: Reset iteration number of Content Ranking
+      responses:
+        200:
+          description: OK - Successfully reset iteration number of Content Ranking
+        404:
+          description: NOT FOUND - Content Ranking config does not exist
+
+  /content_ranking/start:
+    get:
+      operationId: content_ranking.start
+      tags:
+        - content_ranking
+      summary: Start Content Ranking
+      description: Start Content Ranking
+      responses:
+        200:
+          description: OK - Successfully started Content Ranking
+
+  /content_ranking/stop:
+    get:
+      operationId: content_ranking.stop
+      tags:
+        - content_ranking
+      summary: Stop Content Ranking
+      description: Stop Content Ranking
+      responses:
+        200:
+          description: OK - Successfully stopped Content Ranking
+
+  /ner/config:
+    get:
+      operationId: ner.read_config
+      tags:
+        - ner
+      summary: Read configuration of Named Entity Recognition
+      description: Read configuration of Named Entity Recognition
+      responses:
+        200:
+          description: OK - Successfully retrieved Named Entity Recognition config
+          schema:
+            type: object
+            properties:
+              spacy_model:
+                type: string
+              phrase_matcher:
+                type: string
+              top_n:
+                type: integer
+              number_of_docs:
+                type: integer
+              iteration:
+                type: integer
+        404:
+          description: NOT FOUND - Named Entity Recognition config does not exist
+
+    post:
+      operationId: ner.add_config
+      tags:
+        - ner
+      summary: Add configuration of Named Entity Recognition
+      description: Add configuration of Named Entity Recognition
+      parameters:
+        - in: body
+          name: ner_config
+          description: The configuration of the Named Entity Recognition
+          schema:
+            type: object
+            properties:
+              spacy_model:
+                type: string
+                enum: ["en_core_web_sm", "en_core_web_md", "en_core_web_lg"]
+              phrase_matcher:
+                type: boolean
+              top_n:
+                type: integer
+              number_of_docs:
+                type: integer
+              iteration:
+                type: integer
+      responses:
+        201:
+          description: CREATED - Successfully added Named Entity Recognition config
+        409:
+          description: CONFLICT - Named Entity Recognition config already exists
+
+    put:
+      operationId: ner.change_config
+      tags:
+        - ner
+      summary: Update configuration of Named Entity Recognition
+      description: Update configuration of Named Entity Recognition
+      parameters:
+        - in: body
+          name: ner_config
+          description: The changes of the configuration
+          schema:
+            type: object
+            properties:
+              spacy_model:
+                type: string
+                enum: ["en_core_web_sm", "en_core_web_md", "en_core_web_lg"]
+              phrase_matcher:
+                type: boolean
+              top_n:
+                type: integer
+              number_of_docs:
+                type: integer
+              iteration:
+                type: integer
+      responses:
+        200:
+          description: OK - Successfully updated Named Entity Recognition config
+        404:
+          description: NOT FOUND - Named Entity Recognition config does not exist
+
+  /ner/number_of_docs:
+    get:
+      operationId: ner.read_number_of_docs
+      tags:
+        - ner
+      summary: Retrieve the number of documents to be evaluated with Named Entity Recognition
+      description: Retrieve the number of documents to be evaluated with Named Entity Recognition
+      responses:
+        200:
+          description: OK - Successfully retrieved number of documents to be evaluated with Named Entity Recognition
+          schema:
+            type: string
+
+    put:
+      operationId: ner.change_number_of_docs
+      tags:
+        - ner
+      summary: Update the number of documents to be evaluated with Named Entity Recognition
+      description: Update the number of documents to be evaluated with Named Entity Recognition
+      parameters:
+        - in: query
+          name: number_of_docs
+          required: True
+          type: integer
+          description: The number of documents to be evaluated with Named Entity Recognition
+      responses:
+        200:
+          description: OK - Successfully updated number of documents to be evaluated with Named Entity Recognition
+        404:
+          description: NOT FOUND - Named Entity Recognition config does not exist
+
+  /ner/iteration_number:
+    get:
+      operationId: ner.read_iteration_number
+      tags: 
+        - ner
+      summary: Get iteration number of Named Entity Recognition
+      description: Get iteration number of Named Entity Recognition
+      responses:
+        200:
+          description: OK - Successfully retrieved iteration number of Named Entity Recognition
+          schema:
+            type: string
+        404:
+          description: NOT FOUND - Named Entity Recognition config does not exist
+
+  /ner/iteration_number/update:
+    put:
+      operationId: ner.update_iteration_number
+      tags: 
+        - ner
+      summary: Update iteration number of Named Entity Recognition
+      description: Update iteration number of Named Entity Recognition
+      responses:
+        200:
+          description: OK - Successfully updated iteration number of Named Entity Recognition
+        404:
+          description: NOT FOUND - Named Entity Recognition config does not exist
+
+  /ner/iteration_number/reset:
+    put:
+      operationId: ner.reset_iteration_number
+      tags: 
+        - ner
+      summary: Reset iteration number of Named Entity Recognition
+      description: Reset iteration number of Named Entity Recognition
+      responses:
+        200:
+          description: OK - Successfully reset iteration number
+        404:
+          description: NOT FOUND - Named Entity Recognition config does not exist
+
+          
+  /ner/start:
+    get:
+      operationId: ner.start
+      tags:
+        - ner
+      summary: Start Named Entity Recognition
+      description: Start Named Entity Recognition
+      responses:
+        200:
+          description: OK - Successfully started Named Entity Recognition
+
+  /ner/stop:
+    get:
+      operationId: ner.stop
+      tags:
+        - ner
+      summary: Stop Named Entity Recognition
+      description: Stop Named Entity Recognition
+      responses:
+        200:
+          description: OK - Successfully stopped Named Entity Recognition
+
+  /mongo/config:
+    get:
+      operationId: mongo.generate_config
+      tags:
+        - mongo
+      summary: Generate configuration of MongoDB
+      description: Generate configuration of MongoDB
+      responses:
+        200:
+          description: OK - Successfully generated MongoDB config
+
+  /mongo/start:
+    get:
+      operationId: mongo.start
+      tags:
+        - mongo
+      summary: Start MongoDB
+      description: Start MongoDB
+      responses:
+        200:
+          description: OK - Successfully started MongoDB
+
+  /mongo/stop:
+    get:
+      operationId: mongo.stop
+      tags:
+        - mongo
+      summary: Stop MongoDB
+      description: Stop MongoDB
+      responses:
+        200:
+          description: OK - Successfully stopped MongoDB
