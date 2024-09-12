@@ -30,7 +30,7 @@ DOI: [10.3390/electronics10070818](https://doi.org/10.3390/electronics10070818)
 
 This repository is maintained by **Paris Koloveas** from UoP
 
-* Email: pkoloveas@uop.gr
+* Email: <pkoloveas@uop.gr>
 
 ## Citing this work
 
