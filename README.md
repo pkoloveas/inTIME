@@ -17,14 +17,14 @@ DOI: [10.3390/electronics10070818](https://doi.org/10.3390/electronics10070818)
 
 ## Wikis
 
-1. [**Focused Crawls**](https://gitlab.com/cybertrust/tool-development/crawling-service/-/wikis/1.-Focused-Crawls)
-2. [**In-Depth Crawls**](https://gitlab.com/cybertrust/tool-development/crawling-service/-/wikis/2.-Indepth-Crawls)
-3. [**Dark Web Crawls**](https://gitlab.com/cybertrust/tool-development/crawling-service/-/wikis/3.-Dark-Web-Crawls)
-4. [**Configuration of Parsers**](https://gitlab.com/cybertrust/tool-development/crawling-service/-/wikis/4.-Configuration-of-Parsers)
-5. [**Configuration of MongoDB**](https://gitlab.com/cybertrust/tool-development/crawling-service/-/wikis/5.-Configuration-of-MongoDB)
-6. [**Configuration of the Content Ranking component**](https://gitlab.com/cybertrust/tool-development/crawling-service/-/wikis/6.-Configuration-of-the-Content-Ranking-component)
-7. [**Configuration of the Named Entity Recognition component**](https://gitlab.com/cybertrust/tool-development/crawling-service/-/wikis/7.-Configuration-of-the-Named-Entity-Recognition-component)
-8. [**REST API Reference**](https://gitlab.com/cybertrust/tool-development/crawling-service/-/wikis/REST-API-Reference)
+1. [**Focused Crawls**](https://github.com/pkoloveas/inTIME/wiki/1.-Focused-Crawls)
+2. [**In-Depth Crawls**](https://github.com/pkoloveas/inTIME/wiki/2.-Indepth-Crawls)
+3. [**Dark Web Crawls**](https://github.com/pkoloveas/inTIME/wiki/3.-Dark-Web-Crawls)
+4. [**Configuration of Parsers**](https://github.com/pkoloveas/inTIME/wiki/4.-Configuration-of-Parsers)
+5. [**Configuration of MongoDB**](https://github.com/pkoloveas/inTIME/wiki/5.-Configuration-of-MongoDB)
+6. [**Configuration of the Content Ranking component**](https://github.com/pkoloveas/inTIME/wiki/6.-Configuration-of-the-Content-Ranking-component)
+7. [**Configuration of the Named Entity Recognition component**](https://github.com/pkoloveas/inTIME/wiki/7.-Configuration-of-the-Named-Entity-Recognition-component)
+8. [**REST API Reference**](https://github.com/pkoloveas/inTIME/wiki/REST-API-Reference)
 
 ## Who do I talk to?
 
