@@ -1,6 +1,6 @@
 # inTIME: A Machine Learning-Based Framework for Gathering and Leveraging Web Data to Cyber-Threat Intelligence
 
-[DOI](https://doi.org/10.3390/electronics10070818)
+DOI: [10.3390/electronics10070818](https://doi.org/10.3390/electronics10070818)
 
 ## Key Functionality
 
