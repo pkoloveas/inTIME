@@ -18,7 +18,7 @@ DOI: [10.3390/electronics10070818](https://doi.org/10.3390/electronics10070818)
 ## Wikis
 
 1. [**Focused Crawls**](https://github.com/pkoloveas/inTIME/wiki/1.-Focused-Crawls)
-2. [**In-Depth Crawls**](https://github.com/pkoloveas/inTIME/wiki/2.-Indepth-Crawls)
+2. [**In-Depth Crawls**](https://github.com/pkoloveas/inTIME/wiki/2.-In-Depth-Crawls)
 3. [**Dark Web Crawls**](https://github.com/pkoloveas/inTIME/wiki/3.-Dark-Web-Crawls)
 4. [**Configuration of Parsers**](https://github.com/pkoloveas/inTIME/wiki/4.-Configuration-of-Parsers)
 5. [**Configuration of MongoDB**](https://github.com/pkoloveas/inTIME/wiki/5.-Configuration-of-MongoDB)
